@@ -1,0 +1,30 @@
+const { sendError } = require('../utils/responseHelper');
+
+// Usage: authorize('super_admin', 'business_admin')
+const authorize = (...roles) => {
+  return (req, res, next) => {
+    if (!req.user) {
+      return sendError(res, 'Not authenticated.', 401);
+    }
+
+    if (!roles.includes(req.user.role)) {
+      return sendError(
+        res,
+        `Access denied. Required role: ${roles.join(' or ')}`,
+        403
+      );
+    }
+
+    next();
+  };
+};
+
+// Role constants - use these in routes
+const ROLES = {
+  SUPER_ADMIN: 'super_admin',
+  BUSINESS_ADMIN: 'business_admin',
+  MARKETING_MANAGER: 'marketing_manager',
+  VIEWER: 'viewer',
+};
+
+module.exports = { authorize, ROLES };
