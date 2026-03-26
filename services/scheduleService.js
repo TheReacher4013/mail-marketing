@@ -3,7 +3,7 @@ const { pool }   = require('../config/db');
 const emailQueue = require('./queueService');
 
 const startScheduler = () => {
-  // Run every minute - check for campaigns that need to be sent
+  
   cron.schedule('* * * * *', async () => {
     try {
       const [campaigns] = await pool.query(
@@ -18,10 +18,8 @@ const startScheduler = () => {
       for (const campaign of campaigns) {
         console.log(`Dispatching scheduled campaign: ${campaign.name}`);
 
-        // Update status to sending
         await pool.query("UPDATE campaigns SET status = 'sending' WHERE id = ?", [campaign.id]);
 
-        // Get contacts
         let contacts;
         if (campaign.segment_id) {
           [contacts] = await pool.query(
@@ -39,13 +37,11 @@ const startScheduler = () => {
           continue;
         }
 
-        // Insert campaign_contacts
         const values = contacts.map(c => [campaign.id, c.id]);
         await pool.query(
           'INSERT IGNORE INTO campaign_contacts (campaign_id, contact_id) VALUES ?', [values]
         );
 
-        // Queue each email
         for (const contact of contacts) {
           await emailQueue.add('send-email', {
             campaignId:  campaign.id,
@@ -56,8 +52,7 @@ const startScheduler = () => {
             htmlContent: campaign.html_content,
           }, { attempts: 3, backoff: { type: 'exponential', delay: 2000 } });
         }
-
-        // Mark campaign as sent after queuing all
+        
         await pool.query("UPDATE campaigns SET status = 'sent' WHERE id = ?", [campaign.id]);
       }
     } catch (err) {
