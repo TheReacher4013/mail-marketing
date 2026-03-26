@@ -1,6 +1,6 @@
 const { sendError } = require('../utils/responseHelper');
 
-// Usage: authorize('super_admin', 'business_admin')
+
 const authorize = (...roles) => {
   return (req, res, next) => {
     if (!req.user) {
@@ -19,7 +19,6 @@ const authorize = (...roles) => {
   };
 };
 
-// Role constants - use these in routes
 const ROLES = {
   SUPER_ADMIN: 'super_admin',
   BUSINESS_ADMIN: 'business_admin',
