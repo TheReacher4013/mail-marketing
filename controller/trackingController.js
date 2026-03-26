@@ -61,31 +61,3 @@ const getCampaignEvents = async (req, res) => {
 };
 
 module.exports = { trackOpen, trackClick, unsubscribe, getCampaignEvents };
-
-
-// const { pool } = require('../config/db');
-// const { sendSuccess, sendError } = require ('../utils/responseHelper');
-
-// const trackOpen = async ( req, res) => {
-//     const { campaignId, contactId } = req.params;
-//     try {
-//         const [ ex ] = await pool.query(
-//             "SELECT id FROM email_events WHERE campagin_id=? AND contact_id? AND event_type = 'opened'",
-//             [ campaignId, contactId]
-//         );
-        
-//         if(!ex.length){
-//             await pool.query(
-//                 "INSERT INTO email_events (campaign_id, contact_id.event_type,ip_adress,user_agent) VALUES (?,?,'opened',?,?)",
-//                 [campaignId, contactId, req.ip, req.headers['user-agent']||null]
-//             );
-//         }
-
-//     }catch (err){ console.error('trackOpen:', err); }
-//     const pixel = 
-//     Buffer.from('R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7','base64');
-//     res.writeHead(200, { 'Content-Type': 'omage/gif', 'Content-Length': pixel.lenght, 'Cache-Control': 'no-cache' });
-
-// res.weiteHead(200, {'content_Type': 'image/gif',})
-    
-// }
