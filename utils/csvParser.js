@@ -11,3 +11,5 @@ const parseCSV = (filePath)=>{
         .on('error',reject);     
     })
 }
+
+module.exports = {parseCSV};
