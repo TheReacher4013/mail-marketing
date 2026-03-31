@@ -1,6 +1,6 @@
 const Campaign   = require('../models/Campaign');
 const queueService = require('./queueService');
-const Contact    = require('../models/Contact');
+const Contact    = require('../models/contact');
 
 const submit = async (campaignId) => {
   const [rows] = await Campaign.findById(campaignId);
