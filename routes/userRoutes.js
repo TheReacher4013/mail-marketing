@@ -1,33 +1,21 @@
-const express = require("express");
-const router = express.Router();
-const userController = require("../controllers/user.controller");
-const checkPermission = require("../middlewares/checkPermission");
+const router = require('express').Router();
+const { body } = require('express-validator');
+const { authenticate } = require('../middlewares/authenticate');
+const { authorize } = require('../middlewares/authorize');
+const { validateRequest } = require('../middlewares/validateRequest');
+const { auditLog } = require('../middlewares/auditLogger');
+const c = require('../controllers/userController');
 
-router.post(
-    "/",
-    checkPermission("users", "create"),
-    userController.createUser
+const SA = 'super_admin';
+
+router.get('/', authenticate, authorize(SA), c.getAll);
+router.get('/roles', authenticate, authorize(SA, 'business_admin'), c.getRoles);
+router.get('/:id', authenticate, authorize(SA), c.getById);
+router.post('/', authenticate, authorize(SA),
+    [body('name').notEmpty(), body('email').isEmail(), body('password').isLength({ min: 6 }), body('role_id').isInt()],
+    validateRequest, auditLog('CREATE', 'users'), c.create
 );
-router.get(
-    "/",
-    checkPermission("users", "view"),
-    userController.getAllUsers
-);
-router.get(
-    "/:id",
-    checkPermission("users", "view"),
-    userController.getUserById
-);
-router.put(
-    "/:id",
-    checkPermission("users", "edit"),
-    userController.updateUser
-);
-router.delete(
-    "/:id",
-    checkPermission("users", "delete"),
-    userController.deleteUser
-);
-router.put("/change-password", userController.changePassword);
+router.put('/:id', authenticate, authorize(SA), auditLog('UPDATE', 'users'), c.update);
+router.delete('/:id', authenticate, authorize(SA), auditLog('DELETE', 'users'), c.remove);
 
 module.exports = router;
