@@ -12,7 +12,6 @@ exports.getAll = async (req, res) => {
   }
 };
 
-
 exports.update = async (req, res) => {
   try {
     const { settings } = req.body; 
