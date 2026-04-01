@@ -1,6 +1,6 @@
 const auditService = require('../services/auditService');
 
-const { sendSucess, sendError } = require('../utils/responseHelper');
+const { sendSuccess, sendError } = require('../utils/responseHelper');
 
 exports.getLogs = async (req, res) => {
     try {
