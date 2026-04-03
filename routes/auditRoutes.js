@@ -1,8 +1,8 @@
 const router =  require('express').Router();
 const { authenticate } =
-require('../middleware/authorize');
-const { authorize } = require('../middleware/authorize');
-const c = require('../controller/auditController');
+require('../middlewares/authenticate');
+const { authorize } = require('../middlewares/authorize');
+const c = require('../controllers/auditController');
 
 router.get('/', authenticate, authorize('super_admin', 'business_admin'),
 c.getLogs);

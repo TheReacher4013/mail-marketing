@@ -1,7 +1,7 @@
 const Automation = require('../models/Automation');
 const Contact    = require('../models/Contact');
 const Template   = require('../models/Template');
-const emailQueue = require('./queueService');
+// const emailQueue = require('./queueService');
 
 const trigger = async (triggerEvent, contactId) => {
   const [automations] = await Automation.findActiveByTrigger(triggerEvent);
