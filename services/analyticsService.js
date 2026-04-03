@@ -28,7 +28,7 @@ const getOverview = async () =>{
     };
 };
 
-const getCampaignsStats = async (id) => {
+const getCampaignStats = async (id) => {
     const [[cam]] = await pool.query(
         `SELECT c.id, c.name, c.subject, c.status, c.total_sent, c.created_at,
         (SELECT COUNT (*) FROM

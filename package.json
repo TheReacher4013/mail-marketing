@@ -2,12 +2,12 @@
   "name": "mail-marketing",
   "version": "1.0.0",
   "description": "",
-  "main": "src/server.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node src/server.js",
-    "dev": "nodemon src/server.js",
-    "worker": "node src/workers/emailWorker.js",
-    "scheduler": "node src/workers/campaignScheduler.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "worker": "node workers/emailWorker.js",
+    "scheduler": "node workers/campaignScheduler.js"
   },
   "keywords": [],
   "author": "",
