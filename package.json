@@ -1,7 +1,6 @@
 {
   "name": "mail-marketing",
   "version": "1.0.0",
-  "description": "",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -9,6 +8,7 @@
     "worker": "node workers/emailWorker.js",
     "scheduler": "node workers/campaignScheduler.js"
   },
+  
   "keywords": [],
   "author": "",
   "license": "ISC",
