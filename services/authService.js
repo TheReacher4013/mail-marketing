@@ -6,7 +6,7 @@ const {hashPassword, comparePassword} = require('../utils/hashPassword');
 const {generateToken} = require('./tokenService');
 
 
-const login = async(ElementInternals, password, ip) => {
+const login = async(email, password, ip) => {
     const [rows] = await User.findByEmail(email);
     if (!rows.length) throw {status:401, message:"Invalid email or password."};
     
